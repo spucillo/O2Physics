@@ -1773,7 +1773,7 @@ struct StrangenessInJets {
   // Postprocessing
   void processDerivedAnalysis(aod::V0InJets const& v0s, aod::CascInJets const& cascades)
   {
-    for (auto& v0 : v0s) {
+    for (const auto& v0 : v0s) {
 
       if (v0.v0negITSlayers() < minITSnCls || v0.v0posITSlayers() < minITSnCls)
         continue;
@@ -1842,7 +1842,7 @@ struct StrangenessInJets {
       }
     }
 
-    for (auto& casc : cascades) {
+    for (const auto& casc : cascades) {
 
       if (casc.v0negITSlayers() < minITSnCls || casc.v0posITSlayers() < minITSnCls || casc.bachITSlayers() < minITSnCls)
         continue;
@@ -1966,8 +1966,8 @@ struct StrangenessInJets {
           continue;
       }
       //  V0 mass window
-        if (std::fabs(casc.masslambda() - o2::constants::physics::MassLambda0) > deltaMassLambda)
-          continue;
+      if (std::fabs(casc.masslambda() - o2::constants::physics::MassLambda0) > deltaMassLambda)
+        continue;
 
       // Reject candidates compatible with Xi
       if (std::fabs(casc.massxi() - o2::constants::physics::MassXiMinus) < deltaMassXi)
