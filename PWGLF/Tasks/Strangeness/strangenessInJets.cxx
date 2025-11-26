@@ -428,17 +428,17 @@ struct StrangenessInJets {
       return false;
 
     // Constants for identifying heavy-flavor (charm and bottom) content from PDG codes
-    static constexpr int kCharmQuark = 4;
-    static constexpr int kBottomQuark = 5;
-    static constexpr int hundreds = 100;
-    static constexpr int thousands = 1000;
+    static constexpr int CharmQuark = 4;
+    static constexpr int BottomQuark = 5;
+    static constexpr int Hundreds = 100;
+    static constexpr int Thousands = 1000;
 
     // Check if particle is from heavy-flavor decay
     bool fromHF = false;
     if (particle.has_mothers()) {
       auto mother = mcParticles.iteratorAt(particle.mothersIds()[0]);
       int motherPdg = std::abs(mother.pdgCode());
-      fromHF = (motherPdg / hundreds == kCharmQuark || motherPdg / hundreds == kBottomQuark || motherPdg / thousands == kCharmQuark || motherPdg / thousands == kBottomQuark);
+      fromHF = (motherPdg / Hundreds == CharmQuark || motherPdg / Hundreds == BottomQuark || motherPdg / Thousands == CharmQuark || motherPdg / Thousands == BottomQuark);
     }
 
     // Select only physical primary particles or from heavy-flavor
@@ -1255,8 +1255,8 @@ struct StrangenessInJets {
           continue;
 
         // Build 4-momentum assuming charged pion mass
-        static constexpr float kMassPionChargedSquared = o2::constants::physics::MassPionCharged * o2::constants::physics::MassPionCharged;
-        const double energy = std::sqrt(particle.p() * particle.p() + kMassPionChargedSquared);
+        static constexpr float MassPionChargedSquared = o2::constants::physics::MassPionCharged * o2::constants::physics::MassPionCharged;
+        const double energy = std::sqrt(particle.p() * particle.p() + MassPionChargedSquared);
         fastjet::PseudoJet fourMomentum(particle.px(), particle.py(), particle.pz(), energy);
         fourMomentum.set_user_index(particle.pdgCode());
         fjParticles.emplace_back(fourMomentum);
