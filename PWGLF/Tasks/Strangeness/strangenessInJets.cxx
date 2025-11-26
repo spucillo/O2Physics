@@ -1791,6 +1791,45 @@ struct StrangenessInJets {
         continue;
       if (std::fabs(v0.v0dcanegtopv()) < dcanegtoPVmin)
         continue;
+      // PID selections (TPC) -- K0s
+      if (v0.ntpcsigmapospi() < nsigmaTPCmin || v0.ntpcsigmapospi() > nsigmaTPCmax)
+        continue;
+      if (v0.ntpcsigmanegpi() < nsigmaTPCmin || v0.ntpcsigmanegpi() > nsigmaTPCmax)
+        continue;
+
+      // PID selections (TOF) -- K0s
+      if (requireTOF) {
+        if (v0.ntofsigmapospi() < nsigmaTOFmin || v0.ntofsigmapospi() > nsigmaTOFmax)
+          continue;
+        if (v0.ntofsigmanegpi() < nsigmaTOFmin || v0.ntofsigmanegpi() > nsigmaTOFmax)
+          continue;
+      }
+      // PID selections (TPC): positive track = proton, negative track = pion -- Lam
+      if (v0.ntpcsigmapospr() < nsigmaTPCmin || v0.ntpcsigmapospr() > nsigmaTPCmax)
+        continue;
+      if (v0.ntpcsigmanegpi() < nsigmaTPCmin || v0.ntpcsigmanegpi() > nsigmaTPCmax)
+        continue;
+
+      // PID selections (TOF): positive track = proton, negative track = pion -- Lam
+      if (requireTOF) {
+        if (v0.ntofsigmapospr() < nsigmaTOFmin || v0.ntofsigmapospr() > nsigmaTOFmax)
+          continue;
+        if (v0.ntofsigmanegpi() < nsigmaTOFmin || v0.ntofsigmanegpi() > nsigmaTOFmax)
+          continue;
+      }
+      // PID selections (TPC): negative track = proton, positive track = pion --- ALam
+      if (v0.ntpcsigmapospi() < nsigmaTPCmin || v0.ntpcsigmapospi() > nsigmaTPCmax)
+        continue;
+      if (v0.ntpcsigmanegpr() < nsigmaTPCmin || v0.ntpcsigmanegpr() > nsigmaTPCmax)
+        continue;
+
+      // PID selections (TOF): negative track = proton, positive track = pion --- ALam
+      if (requireTOF) {
+        if (v0.ntofsigmapospi() < nsigmaTOFmin || v0.ntofsigmapospi() > nsigmaTOFmax)
+          continue;
+        if (v0.ntofsigmanegpr() < nsigmaTOFmin || v0.ntofsigmanegpr() > nsigmaTOFmax)
+          continue;
+      }
 
       if (v0.isUE()) {
         registryData.fill(HIST("K0s_in_ue"), v0.multft0m(), v0.pt(), v0.massk0short());
@@ -1827,6 +1866,111 @@ struct StrangenessInJets {
       if (std::fabs(casc.v0dcanegtopv()) < dcanegtoPVmin)
         continue;
       if (std::fabs(casc.dcabachtopv()) < dcabachtopvMin)
+        continue;
+      if (std::fabs(casc.dcav0topv()) < dcaV0topvMin)
+        continue;
+      if (std::fabs(casc.dcacascdaughters()) > dcaCascDaughtersMax)
+        continue;
+      //Xi
+      // Xi+ selection (Xi+ -> antiL + pi+)
+      if (casc.sign() > 0) {
+        // PID selections (TPC)
+        if (casc.ntpcsigmanegpr() < nsigmaTPCmin || casc.ntpcsigmanegpr() > nsigmaTPCmax)
+          continue;
+        if (casc.ntpcsigmapospi() < nsigmaTPCmin || casc.ntpcsigmapospi() > nsigmaTPCmax)
+          continue;
+
+        // PID selections (TOF)
+        if (requireTOF) {
+          if (casc.ntofsigmanegpr() < nsigmaTOFmin || casc.ntofsigmanegpr() > nsigmaTOFmax)
+            continue;
+          if (casc.ntofsigmapospi() < nsigmaTOFmin || casc.ntofsigmapospi() > nsigmaTOFmax)
+            continue;
+        }
+      }
+      // Xi- selection (Xi- -> L + pi-)
+      if (casc.sign() < 0) {
+        // PID selections (TPC)
+        if (casc.ntpcsigmapospr() < nsigmaTPCmin || casc.ntpcsigmapospr() > nsigmaTPCmax)
+          continue;
+        if (casc.ntpcsigmanegpi() < nsigmaTPCmin || casc.ntpcsigmanegpi() > nsigmaTPCmax)
+          continue;
+
+        // PID selections (TOF)
+        if (requireTOF) {
+          if (casc.ntofsigmapospr() < nsigmaTOFmin || casc.ntofsigmapospr() > nsigmaTOFmax)
+            continue;
+          if (casc.ntofsigmanegpi() < nsigmaTOFmin || casc.ntofsigmanegpi() > nsigmaTOFmax)
+            continue;
+        }
+      }
+
+      // PID selection on bachelor
+      if (casc.ntpcsigmabachpi() < nsigmaTPCmin || casc.ntpcsigmabachpi() > nsigmaTPCmax)
+        continue;
+
+      // PID selections (TOF)
+      if (requireTOF) {
+        if (casc.ntofsigmabachpi() < nsigmaTOFmin || casc.ntofsigmabachpi() > nsigmaTOFmax)
+          continue;
+      }
+      //  V0 mass window
+        if (std::fabs(casc.masslambda() - o2::constants::physics::MassLambda0) > deltaMassLambda)
+          continue;
+      // Reject candidates compatible with Omega
+      if (std::fabs(casc.massomega() - o2::constants::physics::MassOmegaMinus) < deltaMassOmega)
+        continue;
+
+      //Omega
+      // Omega+ selection (Omega+ -> antiL + K+)
+      if (casc.sign() > 0) {
+        // PID selections (TPC)
+        if (casc.ntpcsigmanegpr() < nsigmaTPCmin || casc.ntpcsigmanegpr() > nsigmaTPCmax)
+          continue;
+        if (casc.ntpcsigmapospi() < nsigmaTPCmin || casc.ntpcsigmapospi() > nsigmaTPCmax)
+          continue;
+
+        // PID selections (TOF)
+        if (requireTOF) {
+          if (casc.ntofsigmanegpr() < nsigmaTOFmin || casc.ntofsigmanegpr() > nsigmaTOFmax)
+            continue;
+          if (casc.ntofsigmapospi() < nsigmaTOFmin || casc.ntofsigmapospi() > nsigmaTOFmax)
+            continue;
+        }
+      }
+
+      // Omega- selection (Omega- -> L + K-)
+      if (casc.sign() < 0) {
+        // PID selections (TPC)
+        if (casc.ntpcsigmapospr() < nsigmaTPCmin || casc.ntpcsigmapospr() > nsigmaTPCmax)
+          continue;
+        if (casc.ntpcsigmanegpi() < nsigmaTPCmin || casc.ntpcsigmanegpi() > nsigmaTPCmax)
+          continue;
+
+        // PID selections (TOF)
+        if (requireTOF) {
+          if (casc.ntofsigmapospr() < nsigmaTOFmin || casc.ntofsigmapospr() > nsigmaTOFmax)
+            continue;
+          if (casc.ntofsigmanegpi() < nsigmaTOFmin || casc.ntofsigmanegpi() > nsigmaTOFmax)
+            continue;
+        }
+      }
+
+      // PID selection on bachelor
+      if (casc.ntpcsigmabachka() < nsigmaTPCmin || casc.ntpcsigmabachka() > nsigmaTPCmax)
+        continue;
+
+      // PID selections (TOF)
+      if (requireTOF) {
+        if (casc.ntofsigmabachka() < nsigmaTOFmin || casc.ntofsigmabachka() > nsigmaTOFmax)
+          continue;
+      }
+      //  V0 mass window
+        if (std::fabs(casc.masslambda() - o2::constants::physics::MassLambda0) > deltaMassLambda)
+          continue;
+
+      // Reject candidates compatible with Xi
+      if (std::fabs(casc.massxi() - o2::constants::physics::MassXiMinus) < deltaMassXi)
         continue;
 
       if (casc.isUE()) {
