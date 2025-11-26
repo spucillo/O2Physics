@@ -80,7 +80,7 @@ DECLARE_SOA_TABLE(V0InJets, "AOD", "V0INJETS",
                   lfinjets::IsUE, lfinjets::IsJC);
 
 DECLARE_SOA_TABLE(CascInJets, "AOD", "CASCINJETS",
-                  lfinjets::Pt, lfinjets::Sign, lfinjets::MassXi, lfinjets::MassOmega, lfinjets::MassLambdaDau,
+                  lfinjets::Pt, lfinjets::Sign, lfinjets::MassLambda, lfinjets::MassXi, lfinjets::MassOmega, lfinjets::MassLambdaDau,
                   lfinjets::CascRadius, lfinjets::CascCosPA, lfinjets::V0Radius, lfinjets::V0CosPA,
                   lfinjets::V0DCAPosToPV, lfinjets::V0DCANegToPV, lfinjets::DCABachToPV,
                   lfinjets::DCACascDaughters, lfinjets::V0DCAV0Daughters, lfinjets::DCAV0ToPV,
