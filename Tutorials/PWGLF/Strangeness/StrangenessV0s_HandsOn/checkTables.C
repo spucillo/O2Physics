@@ -126,7 +126,7 @@ void checkTables(const char* fname = "data/AO2D.root")
   std::cout << "\nSummary:\n";
   for (int s = -1; s <= 4; s++) {
     TString name = s < 0 ? "skeleton" : Form("step%d", s);
-    TString res = s >= firstBrokenStep ? "CANNOT run with this file"
+    TString res = s >= firstBrokenStep      ? "CANNOT run with this file"
                   : s >= firstConverterStep ? "ok, but converters are needed"
                                             : "ok";
     std::cout << Form("  %-8s %s\n", name.Data(), res.Data());
